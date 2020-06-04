@@ -46,22 +46,22 @@ export default class UsersController {
         .status(400)
         .json({ message: 'User with email already exists' });
     }
-    const trx = await knex.transaction();
     const salt = crypto.randomBytes(16).toString('hex');
     const hash = crypto.pbkdf2Sync(password, salt,
       1000, 512, 'sha512').toString('hex');
+    const user = {
+      id: hasUser ? hasUser.id : 0,
+      name,
+      email,
+      image_url,
+      hash,
+      salt,
+      removed: false,
+      created_at: hasUser ? hasUser.created_at : new Date(),
+      updated_at: new Date(),
+    } as IUser;
+    const trx = await knex.transaction();
     try {
-      const user = {
-        id: hasUser ? hasUser.id : 0,
-        name,
-        email,
-        image_url,
-        hash,
-        salt,
-        removed: false,
-        created_at: hasUser ? hasUser.created_at : new Date(),
-        updated_at: new Date(),
-      } as IUser;
       if (user.id !== 0) {
         await trx('users').update(user).where('id', user.id);
       } else {
@@ -92,11 +92,11 @@ export default class UsersController {
     if (!user) {
       return response.status(400).json({ message: 'User not found' });
     }
+    user.name = name;
+    user.image_url = image_url;
+    user.updated_at = new Date();
     const trx = await knex.transaction();
     try {
-      user.name = name;
-      user.image_url = image_url;
-      user.updated_at = new Date();
       await trx('users')
         .update(user)
         .where('id', user.id);
@@ -121,10 +121,10 @@ export default class UsersController {
     if (!user) {
       return response.status(400).json({ message: 'User not found' });
     }
+    user.removed = true;
+    user.updated_at = new Date();
     const trx = await knex.transaction();
     try {
-      user.removed = true;
-      user.updated_at = new Date();
       await trx<IUser>('users')
         .update(user)
         .where('id', user.id);
