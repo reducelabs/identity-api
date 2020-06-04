@@ -12,7 +12,7 @@ export default class AppsController {
   async show(request: Request, response: Response) {
     try {
       const { id } = request.params;
-      const user = await knex<IApp>('users')
+      const user = await knex<IApp>('apps')
         .where('id', id)
         .where('removed', false)
         .first();
