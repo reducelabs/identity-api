@@ -19,7 +19,7 @@ export default class UsersController {
         .first();
   
       if (!user) {
-        return response.status(400).json({ message: 'User not found' });
+        return response.status(400).json({ message: `User with id ${id} not found` });
       }
       return response.json(user);
     } catch (error) {
@@ -31,7 +31,6 @@ export default class UsersController {
   }
   async create(request: Request, response: Response) {
     const {
-      id,
       name,
       email,
       image_url,
@@ -90,7 +89,7 @@ export default class UsersController {
       .first();
 
     if (!user) {
-      return response.status(400).json({ message: 'User not found' });
+      return response.status(400).json({ message: `User with id ${id} not found` });
     }
     user.name = name;
     user.image_url = image_url;
@@ -119,7 +118,7 @@ export default class UsersController {
       .first();
       
     if (!user) {
-      return response.status(400).json({ message: 'User not found' });
+      return response.status(400).json({ message: `User with id ${id} not found` });
     }
     user.removed = true;
     user.updated_at = new Date();
