@@ -76,17 +76,23 @@ export default class UsersController {
       password,
       image_url,
     } = request.body;
-    const user = await knex<User>('users')
+    const userOld = await knex<User>('users')
       .where('id', id)
       .where('removed', false)
       .first();
 
-    if (!user) {
+    if (!userOld) {
       return response.status(400).json({ message: 'User not found' });
     }
     const trx = await knex.transaction();
     try {
-      user.update(name, image_url, password);
+      const user = new User(
+        userOld.id,
+        name,
+        userOld.email,
+        image_url
+      );
+      user.setPassword(password);
       await trx('users')
         .update(user)
         .where('id', user.id);
