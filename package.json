@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-de --transpileOnly --ignore-watch node_modules src/server.ts",
+    "dev": "ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
     "knex:seed": "knex --knexfile knexfile.ts seed:run",
-    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest"
+    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
+    "knex:rollback": "knex --knexfile knexfile.ts migrate:rollback"
   },
   "license": "MIT",
   "devDependencies": {
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
     "knex": "^0.21.1",
     "sqlite3": "^4.2.0"

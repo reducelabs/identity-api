@@ -6,12 +6,14 @@ export async function up(knex: Knex): Promise<any> {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('email')
-      .unique()  
+      .unique()
       .notNullable();
+    table.string('image_url').notNullable();
     table.string('hash').notNullable();
     table.string('salt').notNullable();
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
+    table.boolean('removed').defaultTo(false);
   });
 }
 
