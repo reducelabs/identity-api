@@ -3,12 +3,17 @@ import * as Knex from 'knex';
 
 export async function up(knex: Knex): Promise<any> {
   return knex.schema.createTable('users', table => {
-    table.increments('id').primary();
+    table.increments('id_clustered')
+      .primary();
+    table.uuid('id')
+      .unique()
+      .primary()
+      .defaultTo(knex.raw('UUID()'));
     table.string('name').notNullable();
     table.string('username')
-      .unique()  
+      .unique()
       .notNullable();
-    table.string('image_url').notNullable();
+    table.string('image_url');
     table.string('email')
       .unique()
       .notNullable();
@@ -33,9 +38,15 @@ export async function up(knex: Knex): Promise<any> {
       .notNullable();
     table.string('hash').notNullable();
     table.string('salt').notNullable();
-    table.timestamp('created_at').defaultTo(knex.fn.now());
-    table.timestamp('updated_at').defaultTo(knex.fn.now());
-    table.boolean('removed').defaultTo(false);
+    table.timestamp('created_at')
+      .notNullable()
+      .defaultTo(knex.fn.now());
+    table.timestamp('updated_at')
+      .notNullable()
+      .defaultTo(knex.fn.now());
+    table.boolean('removed')
+      .notNullable()
+      .defaultTo(false);
   });
 }
 

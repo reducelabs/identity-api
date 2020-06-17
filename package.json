@@ -1,7 +1,9 @@
 {
-  "name": "server",
+  "name": "identity-api",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "https://github.com/reducelabs/identity-api.git",
+  "author": "Kássia Catarine <kassia_catarine.15@hotmail.com>",
   "scripts": {
     "dev": "ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
     "knex:seed": "knex --knexfile knexfile.ts seed:run",
