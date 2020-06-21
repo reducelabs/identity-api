@@ -1,8 +1,7 @@
 import * as Knex from 'knex';
 
-
 export async function up(knex: Knex): Promise<any> {
-  return knex.schema.createTable('apps', table => {
+  return knex.schema.createTable('apps', (table) => {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('url').notNullable();
@@ -12,7 +11,6 @@ export async function up(knex: Knex): Promise<any> {
     table.boolean('removed').defaultTo(false);
   });
 }
-
 
 export async function down(knex: Knex): Promise<any> {
   return knex.schema.dropTable('apps');

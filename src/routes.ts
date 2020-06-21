@@ -15,7 +15,10 @@ const groupsController = new GroupsController();
 routes
   .post('/sign-up', signUpController.checkEmailExist)
   .get('/sign-up/check-email/:email', signUpController.checkEmailExist)
-  .get('/sign-up/check-username/:username', signUpController.checkUsernameExist);
+  .get(
+    '/sign-up/check-username/:username',
+    signUpController.checkUsernameExist
+  );
 
 // Users
 routes
@@ -26,14 +29,16 @@ routes
   .get('/users/:id', usersController.show);
 
 // Apps
-routes.get('/apps', appsController.index)
+routes
+  .get('/apps', appsController.index)
   .post('/apps', appsController.create)
   .put('/apps/:id', appsController.update)
   .delete('/apps/:id', appsController.delete)
   .get('/apps/:id', appsController.show);
 
 // Groups
-routes.get('/groups', groupsController.index)
+routes
+  .get('/groups', groupsController.index)
   .post('/groups', groupsController.create)
   .put('/groups/:id', groupsController.update)
   .delete('/groups/:id', groupsController.delete)
